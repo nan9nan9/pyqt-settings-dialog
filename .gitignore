@@ -1,9 +1,16 @@
+# Python
 __pycache__/
 *.py[cod]
-.pytest_cache/
-.venv/
 *.egg-info/
-build/
 dist/
-core
-core.*
+build/
+
+# pytest
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code
+.claude/
