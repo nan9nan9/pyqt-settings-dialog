@@ -1,0 +1,141 @@
+{
+  "title": "Settings",
+  "description": "Configure your editor, workspace, and application preferences.",
+  "groups": [
+    {
+      "title": "Text Editor",
+      "properties": {
+        "editor.fontFamily": {
+          "type": "string",
+          "title": "Font Family",
+          "description": "Controls the font family used in the editor.",
+          "default": "Consolas, 'Courier New', monospace"
+        },
+        "editor.fontSize": {
+          "type": "integer",
+          "title": "Font Size",
+          "description": "Controls the font size in pixels.",
+          "default": 14,
+          "minimum": 8,
+          "maximum": 72
+        },
+        "editor.tabSize": {
+          "type": "integer",
+          "title": "Tab Size",
+          "description": "The number of spaces a tab is equal to.",
+          "default": 4,
+          "minimum": 1,
+          "maximum": 16
+        },
+        "editor.wordWrap": {
+          "type": "string",
+          "title": "Word Wrap",
+          "description": "Controls how lines wrap in the editor.",
+          "default": "off",
+          "enum": ["off", "on", "wordWrapColumn", "bounded"]
+        },
+        "editor.minimap.enabled": {
+          "type": "boolean",
+          "title": "Minimap: Enabled",
+          "description": "Shows a miniature overview of your file alongside the editor.",
+          "default": true
+        },
+        "editor.formatOnSave": {
+          "type": "boolean",
+          "title": "Format On Save",
+          "description": "Formats the file when you save. A formatter must be available.",
+          "default": false
+        }
+      }
+    },
+    {
+      "title": "Workbench",
+      "properties": {
+        "workbench.colorTheme": {
+          "type": "string",
+          "title": "Color Theme",
+          "description": "Specifies the preferred color theme for the application.",
+          "default": "Dark Modern",
+          "enum": ["Dark Modern", "Light Modern", "High Contrast"]
+        },
+        "workbench.startupEditor": {
+          "type": "string",
+          "title": "Startup Editor",
+          "description": "Controls which editor is shown when the application starts.",
+          "default": "welcomePage",
+          "enum": ["none", "welcomePage", "newUntitledFile"]
+        },
+        "window.zoomLevel": {
+          "type": "number",
+          "title": "Window: Zoom Level",
+          "description": "Adjusts the zoom level of the application window.",
+          "default": 0.0,
+          "minimum": -3,
+          "maximum": 3,
+          "step": 0.25,
+          "decimals": 2
+        }
+      }
+    },
+    {
+      "title": "Files",
+      "properties": {
+        "files.autoSave": {
+          "type": "string",
+          "title": "Auto Save",
+          "description": "Controls when changes to a file are saved automatically.",
+          "default": "off",
+          "enum": ["off", "afterDelay", "onFocusChange", "onWindowChange"]
+        },
+        "files.autoSaveDelay": {
+          "type": "integer",
+          "title": "Auto Save Delay",
+          "description": "The delay in milliseconds before a modified file is saved.",
+          "default": 1000,
+          "minimum": 100,
+          "maximum": 60000,
+          "step": 100
+        },
+        "files.trimTrailingWhitespace": {
+          "type": "boolean",
+          "title": "Trim Trailing Whitespace",
+          "description": "Removes whitespace at the end of each line when saving a file.",
+          "default": false
+        },
+        "files.encoding": {
+          "type": "string",
+          "title": "Encoding",
+          "description": "The default character set used to read and write files.",
+          "default": "utf8",
+          "enum": ["utf8", "utf8bom", "utf16le", "utf16be"]
+        }
+      }
+    },
+    {
+      "title": "Terminal",
+      "properties": {
+        "terminal.integrated.fontSize": {
+          "type": "integer",
+          "title": "Integrated: Font Size",
+          "description": "Controls the terminal font size in pixels.",
+          "default": 14,
+          "minimum": 8,
+          "maximum": 72
+        },
+        "terminal.integrated.cursorStyle": {
+          "type": "string",
+          "title": "Integrated: Cursor Style",
+          "description": "Controls the style of the terminal cursor.",
+          "default": "block",
+          "enum": ["block", "line", "underline"]
+        },
+        "terminal.integrated.copyOnSelection": {
+          "type": "boolean",
+          "title": "Integrated: Copy On Selection",
+          "description": "Copies selected terminal text to the clipboard.",
+          "default": false
+        }
+      }
+    }
+  ]
+}

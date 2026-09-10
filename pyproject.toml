@@ -1,0 +1,28 @@
+[project]
+name = "pyqt-settings-dialog"
+version = "0.1.0"
+description = "JSON-driven settings widgets and dialogs built with QtPy"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["qtpy>=2.3.1"]
+
+[project.optional-dependencies]
+pyqt5 = ["PyQt5>=5.15"]
+pyqt6 = ["PyQt6>=6.2"]
+pyside2 = ["PySide2>=5.15"]
+pyside6 = ["PySide6>=6.2"]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+settings_dialog = ["icons/*.svg"]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+pythonpath = ["src"]
