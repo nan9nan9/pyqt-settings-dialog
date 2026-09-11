@@ -10,13 +10,14 @@ from qtpy.QtWidgets import (
 from settings_dialog import SettingsWidget
 
 
-def test_embedded_widget_paints_background(app, schema):
+@pytest.mark.parametrize("theme,background", [("dark", "#1f1f1f"), ("light", "#ffffff")])
+def test_embedded_widget_paints_theme_background(app, schema, theme, background):
     parent = QWidget()
     palette = parent.palette()
-    palette.setColor(QPalette.Window, QColor("white"))
+    palette.setColor(QPalette.Window, QColor("red"))
     parent.setPalette(palette)
     parent.setAutoFillBackground(True)
-    widget = SettingsWidget(schema)
+    widget = SettingsWidget(schema, theme=theme)
     QVBoxLayout(parent).addWidget(widget)
     parent.resize(1000, 760)
     parent.show()
@@ -27,7 +28,7 @@ def test_embedded_widget_paints_background(app, schema):
         point = widget.mapTo(parent, QPoint(5, 5))
         scale = snapshot.devicePixelRatio()
         color = snapshot.toImage().pixelColor(int(point.x() * scale), int(point.y() * scale))
-        assert color == QColor("#1f1f1f")
+        assert color == QColor(background)
     finally:
         parent.close()
         parent.deleteLater()
@@ -196,6 +197,11 @@ def test_modified_filter_and_reset_controls(widget):
     widget.findChild(QLineEdit, "settingsSearch").setText("autoSave")
     assert not widget.findChild(QWidget, "files.autoSave").isVisible()
     assert widget.findChild(QLabel, "emptyState").isVisible()
+
+
+def test_unknown_theme_is_rejected(app, schema):
+    with pytest.raises(ValueError, match="unknown theme"):
+        SettingsWidget(schema, theme="blue")
 
 
 def test_duplicate_keys_are_rejected(app, schema):

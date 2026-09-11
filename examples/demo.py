@@ -1,7 +1,8 @@
-"""설치 없이 실행: python examples/demo.py"""
+"""설치 없이 실행: python examples/demo.py [--theme dark|light]"""
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 import sys
@@ -16,6 +17,11 @@ from settings_dialog import SettingsDialog
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Settings dialog demo")
+    parser.add_argument("--theme", choices=("dark", "light"), default="dark",
+                        help="color theme (default: dark)")
+    args = parser.parse_args()
+
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
     with (EXAMPLE_DIR / "settings.json").open(encoding="utf-8") as stream:
@@ -24,6 +30,7 @@ def main() -> int:
     dialog = SettingsDialog(
         schema,
         values={"editor.fontSize": 16, "files.autoSave": "afterDelay"},
+        theme=args.theme,
     )
     dialog.settingsApplied.connect(
         lambda values: print(json.dumps(values, indent=2, ensure_ascii=False), flush=True)

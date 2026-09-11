@@ -20,21 +20,26 @@ from qtpy.QtWidgets import (
     QWidget,
 )
 
-from ._style import STYLE
+from ._style import stylesheet
 from .controls import SettingRow
 
 
 class SettingsWidget(QWidget):
-    """JSON 정의를 표시한다. valueChanged(key, value)는 값이 변경되면 발생한다."""
+    """JSON 정의를 표시한다. valueChanged(key, value)는 값이 변경되면 발생한다.
+
+    theme은 "dark" 또는 "light"다.
+    """
 
     valueChanged = Signal(str, object)
 
-    def __init__(self, schema: dict, values: dict | None = None, parent=None):
+    def __init__(
+        self, schema: dict, values: dict | None = None, parent=None, theme: str = "dark"
+    ):
         super().__init__(parent)
         schema = deepcopy(schema)
         self.setObjectName("settingsWidget")
         self.setAttribute(Qt.WA_StyledBackground, True)
-        self.setStyleSheet(STYLE)
+        self.setStyleSheet(stylesheet(theme))
 
         self._rows: dict[str, SettingRow] = {}
         self._groups = []

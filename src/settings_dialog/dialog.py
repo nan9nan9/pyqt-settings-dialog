@@ -5,7 +5,7 @@ from __future__ import annotations
 from qtpy.QtCore import Signal
 from qtpy.QtWidgets import QDialog, QDialogButtonBox, QHBoxLayout, QLabel, QVBoxLayout
 
-from ._style import STYLE
+from ._style import stylesheet
 from .widget import SettingsWidget
 
 
@@ -14,17 +14,19 @@ class SettingsDialog(QDialog):
 
     settingsApplied = Signal(dict)
 
-    def __init__(self, schema: dict, values: dict | None = None, parent=None):
+    def __init__(
+        self, schema: dict, values: dict | None = None, parent=None, theme: str = "dark"
+    ):
         super().__init__(parent)
         self.setObjectName("settingsDialog")
         self.setWindowTitle(schema.get("title", "Settings"))
-        self.setStyleSheet(STYLE)
+        self.setStyleSheet(stylesheet(theme))
         self.resize(1000, 760)
         self.setMinimumSize(660, 460)
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
-        self.settingsWidget = SettingsWidget(schema, values, self)
+        self.settingsWidget = SettingsWidget(schema, values, self, theme)
         layout.addWidget(self.settingsWidget, 1)
         self._applied_values = self.settingsWidget.values()
 

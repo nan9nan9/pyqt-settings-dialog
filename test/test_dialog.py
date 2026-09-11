@@ -1,5 +1,6 @@
 import pytest
-from qtpy.QtCore import Qt
+from qtpy.QtCore import QPoint, Qt
+from qtpy.QtGui import QColor
 from qtpy.QtTest import QTest
 from qtpy.QtWidgets import QDialog, QDialogButtonBox, QSpinBox
 
@@ -77,3 +78,21 @@ def test_restore_defaults_requires_apply(dialog):
     QTest.mouseClick(buttons.button(QDialogButtonBox.Apply), Qt.LeftButton)
     assert dialog.values()["editor.fontSize"] == 14
     assert not buttons.button(QDialogButtonBox.Apply).isEnabled()
+
+
+def test_light_theme_paints_dialog_and_widget(app, schema):
+    dialog = SettingsDialog(schema, theme="light")
+    dialog.show()
+    app.processEvents()
+    try:
+        snapshot = dialog.grab().toImage()
+        scale = snapshot.devicePixelRatio()
+        header = dialog.settingsWidget.mapTo(dialog, QPoint(5, 5))
+        footer = QPoint(5, dialog.height() - 5)
+        for point in (header, footer):
+            color = snapshot.pixelColor(int(point.x() * scale), int(point.y() * scale))
+            assert color == QColor("#ffffff")
+    finally:
+        dialog.close()
+        dialog.deleteLater()
+        app.processEvents()

@@ -10,7 +10,10 @@ JSON으로 항목을 정의하면 타입에 맞는 입력 컨트롤을 생성한
 
 ```bash
 python examples/demo.py
+python examples/demo.py --theme light
 ```
+
+`--theme`으로 `dark`(기본) 또는 `light` 테마를 선택한다.
 
 데모는 실행 파일 위치를 기준으로 이 저장소의 `src` 패키지와
 `examples/settings.json`을 불러온다. 다른 디렉토리에서도 데모의 절대 경로로 실행할 수 있다.
@@ -116,7 +119,7 @@ app = QApplication(sys.argv)
 with open("examples/settings.json", encoding="utf-8") as stream:
     schema = json.load(stream)
 
-dialog = SettingsDialog(schema, values={"editor.fontSize": 16})
+dialog = SettingsDialog(schema, values={"editor.fontSize": 16}, theme="light")
 dialog.settingsApplied.connect(lambda values: print(values))
 dialog.show()
 sys.exit(app.exec_())
@@ -126,6 +129,8 @@ sys.exit(app.exec_())
 Cancel, Escape 또는 창 닫기는 마지막 적용 이후의 편집을 취소한다.
 Restore Defaults는 모든 항목을 기본값으로 편집하며, 적용하려면 Apply/OK를 눌러야 한다.
 `dialog.values()`는 마지막으로 적용된 값의 복사본을 반환한다.
+`theme`은 `"dark"`(기본) 또는 `"light"`이며, `SettingsWidget`에도 같은 인자를 전달한다.
+다른 값은 `ValueError`를 발생시킨다.
 
 기존 화면에 넣어 사용하려면 `SettingsWidget`을 레이아웃에 추가한다.
 
@@ -168,8 +173,8 @@ src/settings_dialog/
 ├── controls.py   # JSON 항목별 입력과 값 검증
 ├── widget.py     # 검색, 카테고리, 값 접근 API
 ├── dialog.py     # 적용·확인·취소
-├── _style.py     # 설정 화면 내부 스타일
-└── icons/        # 체크 표시와 입력 화살표
+├── _style.py     # dark/light 테마 팔레트와 스타일시트
+└── icons/        # 테마별 체크 표시와 입력 화살표 (dark/, light/)
 examples/
 ├── demo.py
 └── settings.json
